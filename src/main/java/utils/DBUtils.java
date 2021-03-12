@@ -107,6 +107,28 @@ public class DBUtils {
         return null;
     }
 
+
+    public void enrollTo(EnrolledCourses enrolledCourses){
+        loadDriver(dbDriver);
+        Connection connection = getConnection();
+        boolean status = false;
+        String sql = "insert into active_courses values(?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, enrolledCourses.getEmail());
+            preparedStatement.setInt(2, enrolledCourses.getCourse_id());
+            preparedStatement.executeUpdate();
+
+            connection.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
+
     public EnrolledCourses retrieveActiveCourses(User user) {
         loadDriver(dbDriver);
         Connection connection = getConnection();
@@ -125,7 +147,7 @@ public class DBUtils {
                 assert false;
                 enrolledCourses.setEmail(user.getEmail());
                 enrolledCourses.setCourse_id(resultSet.getInt("course_id"));
-                enrolledCourses.setCourse_name(resultSet.getString("course_name"));
+                //enrolledCourses.setCourse_name(resultSet.getString("course_name"));
                 return enrolledCourses;
             }
 
@@ -135,29 +157,6 @@ public class DBUtils {
         return null;
     }
 
-
-
-
-    public void enrollTo(EnrolledCourses enrolledCourses){
-
-        loadDriver(dbDriver);
-        Connection connection = getConnection();
-        boolean status = false;
-        String sql = "insert into active_courses values(?,?,?)";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, enrolledCourses.getEmail());
-            preparedStatement.setInt(2, enrolledCourses.getCourse_id());
-            preparedStatement.setString(3, enrolledCourses.getCourse_name());
-            preparedStatement.executeUpdate();
-
-            connection.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-    }
 
 
 

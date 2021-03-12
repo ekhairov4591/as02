@@ -5,8 +5,9 @@ public class EnrolledCourses {
     private String email;
     private String course_name;
 
-    public EnrolledCourses(String email) {
+    public EnrolledCourses(String email, int course_id) {
         this.email = email;
+        this.course_id = course_id;
     }
 
     public EnrolledCourses() {

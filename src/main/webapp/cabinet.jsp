@@ -57,51 +57,74 @@
     <div class="tableTitle">
         <h2>Available Courses</h2>
     </div>
-    <form action="/as02/cab" method="post">
-        <div>
-            <table>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Course ID</th>
-                    <th>Register</th>
-                </tr>
-                <%
-                    try {
-                        DBUtils dbUtils = new DBUtils();
-                        Connection connection = dbUtils.connExternal();
-                        String sql = "select * from courses";
-                        try {
-                            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                            ResultSet resultSet = preparedStatement.executeQuery();
+    <div>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Course ID</th>
 
-                            while (resultSet.next()) { %>
-                <tr>
-                    <td><b><%=resultSet.getString("course_name")%>
-                    </b></td>
-                    <td><b><%=resultSet.getString("course_id")%>
-                    </b></td>
-                    <td><input type="submit" class="takeCourse" value="Register"></td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
+            </tr>
             <%
-                        resultSet.close();
-                        preparedStatement.close();
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                try {
+                    DBUtils dbUtils = new DBUtils();
+                    Connection connection = dbUtils.connExternal();
+                    String sql = "select * from courses";
+                    try {
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) { %>
+            <tr>
+                <td><b><%=resultSet.getString("course_name")%>
+                </b></td>
+                <td><b><%=resultSet.getString("course_id")%>
+                </b></td>
+
+            </tr>
+            <%
                 }
             %>
+        </table>
+        <%
+                    resultSet.close();
+                    preparedStatement.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
 
-        </div>
-    </form>
+    </div>
 
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <hr>
 
+    <div class="tableTitle">
+        <h2>Register To</h2>
+    </div>
+    <div>
+        <form action="/as02/cab" method="POST">
+            <!-- Courses Available to Reg Form -->
+            <label for="availableCourses"></label>
+            <select name="availableCourses" id="availableCourses" required>
+                <option selected="selected" selected disabled hidden>Course ID</option>
+
+                <option value="1">ID:1 Course:Music</option>
+                <option value="2">ID:2 Course:Arts</option>
+                <option value="3">ID:3 Course:Psychology</option>
+                <option value="4">ID:4 Course:Sound Design</option>
+                <option value="5">ID:5 Course:Mixing&Mastering</option>
+            </select>
+            <input type="submit" class="registerbtn" value="Web Register">
+        </form>
+    </div>
+    <hr>
 
     <div class="tableTitle">
         <h2>Active Courses</h2>
@@ -111,22 +134,51 @@
             <tr>
                 <th>Email</th>
                 <th>Course ID</th>
-                <th>Course Name</th>
+
             </tr>
+            <%
+                try {
+                    String email = (String) session.getAttribute("email");
+                    DBUtils dbUtils = new DBUtils();
+                    Connection connection = dbUtils.connExternal();
+                    String sql = "select * from active_courses where email=?";
+                    try {
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                        preparedStatement.setString(1, email);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) { %>
             <tr>
-                <td><b>${sessionScope['email']}</b></td>
-                <td><b>${sessionScope['course_id']}</b></td>
-                <td><b>${sessionScope['course_name']}</b></td>
+                <td><b><%=resultSet.getString("email")%>
+                </b></td>
+                <td><b><%=resultSet.getString("course_id")%>
+                </b></td>
+
             </tr>
+            <%
+                }
+            %>
         </table>
+        <%
+                    resultSet.close();
+                    preparedStatement.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
     </div>
 
 </div>
 <hr>
 <hr>
 <form action="/as02/out" method="POST">
-<input type="submit" class="registerbtn" value="Sign Out">
+    <input type="submit" class="registerbtn" value="Sign Out">
 </form>
+<hr>
 
 </body>
 

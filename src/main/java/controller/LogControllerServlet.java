@@ -80,14 +80,16 @@ public class LogControllerServlet extends HttpServlet {
                 session.setAttribute("gender", fetchedUser.getGender());
                 session.setAttribute(LogControllerServlet.AUTHORIZE_FIELD, true);
                 session.setAttribute(LogControllerServlet.CURRENT_USER, email);
+                System.out.println("fetched user info");
             } else {
                 System.out.println("Failed to fetch...");
             }
             if(fetchedCourses != null){
                 session.setAttribute("course_id", fetchedCourses.getCourse_id());
                 session.setAttribute("course_name", fetchedCourses.getCourse_name());
+                System.out.println("fetched active courses in Log");
             } else {
-                System.out.println("Failed to fetch courses");
+                System.out.println("Failed to fetch courses in Log");
             }
 
 

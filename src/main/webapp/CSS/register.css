@@ -85,3 +85,10 @@ a {
   border: none;
   background: #f1f1f1;
 }
+
+.takeCourse{
+  font-size: 16px;
+  background-color: white;
+  color:black;
+  border: 2px solid purple;
+}

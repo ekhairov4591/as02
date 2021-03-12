@@ -54,16 +54,39 @@ public class CabControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        //int course_id = Integer.parseInt(req.getParameter("course_id"));
-        //String course_name = req.getParameter("course_name");
+        int toWebReg = Integer.parseInt(req.getParameter("availableCourses"));
 
+        HttpSession session = req.getSession();
+        String email = (String) session.getAttribute("email");
+        String password = (String) session.getAttribute("password");
+        EnrolledCourses fetchedCourses;
 
-        EnrolledCourses enrolledCourses = new EnrolledCourses(email);
+         User user = new User(email, password);
+
         DBUtils dbUtils = new DBUtils();
 
 
-        resp.sendRedirect("/as02/log");
+        EnrolledCourses toEnroll = new EnrolledCourses(email, toWebReg);
+
+
+        try {
+            // add to enrolled
+            dbUtils.enrollTo(toEnroll);
+            System.out.println("enrolled");
+            // fetch updates
+            fetchedCourses = dbUtils.retrieveActiveCourses(user);
+
+            if(fetchedCourses != null){
+                System.out.println("fetched active courses");
+            } else {
+                System.out.println("Failed to fetch courses");
+            }
+            resp.sendRedirect("/as02/log");
+        } catch (Exception e){
+            System.out.println("failed to enroll");
+            e.printStackTrace();
+        }
+
 
     }
 
