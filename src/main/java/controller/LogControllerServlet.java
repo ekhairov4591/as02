@@ -1,7 +1,9 @@
 package controller;
 
+import sun.java2d.loops.GeneralRenderer;
 import sun.rmi.runtime.Log;
 import utils.DBUtils;
+import utils.EnrolledCourses;
 import utils.User;
 
 import javax.servlet.ServletException;
@@ -64,8 +66,10 @@ public class LogControllerServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
             session.setAttribute("password", password);
+            EnrolledCourses fetchedCourses;
             // retrieving
             fetchedUser = dbUtils.retrieveUser(user);
+            fetchedCourses = dbUtils.retrieveActiveCourses(user);
 
             if(fetchedUser != null){
                 session.setAttribute("name", fetchedUser.getName());
@@ -78,6 +82,12 @@ public class LogControllerServlet extends HttpServlet {
                 session.setAttribute(LogControllerServlet.CURRENT_USER, email);
             } else {
                 System.out.println("Failed to fetch...");
+            }
+            if(fetchedCourses != null){
+                session.setAttribute("course_id", fetchedCourses.getCourse_id());
+                session.setAttribute("course_name", fetchedCourses.getCourse_name());
+            } else {
+                System.out.println("Failed to fetch courses");
             }
 
 

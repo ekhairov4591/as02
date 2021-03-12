@@ -124,7 +124,7 @@
 </div>
 <hr>
 <hr>
-<form action="/as02/out" method="post">
+<form action="/as02/out" method="POST">
 <input type="submit" class="registerbtn" value="Sign Out">
 </form>
 

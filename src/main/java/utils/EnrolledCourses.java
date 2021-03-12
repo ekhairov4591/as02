@@ -5,14 +5,12 @@ public class EnrolledCourses {
     private String email;
     private String course_name;
 
-    public EnrolledCourses(String email, int course_id, String course_name) {
-        this.course_id = course_id;
-        this.email = email;
-        this.course_name = course_name;
-    }
-
     public EnrolledCourses(String email) {
         this.email = email;
+    }
+
+    public EnrolledCourses() {
+
     }
 
     public int getCourse_id() {

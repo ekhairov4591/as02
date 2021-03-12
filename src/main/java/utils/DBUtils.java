@@ -111,18 +111,19 @@ public class DBUtils {
         loadDriver(dbDriver);
         Connection connection = getConnection();
         boolean status = false;
-        EnrolledCourses enrolledCourses = null;
+        EnrolledCourses enrolledCourses = new EnrolledCourses();
         String sql = "select * from active_courses where email = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getEmail());
             ResultSet resultSet = preparedStatement.executeQuery();
+
             status = resultSet.next();
 
             if(status){
                 assert false;
-                enrolledCourses.setEmail(resultSet.getString("email"));
+                enrolledCourses.setEmail(user.getEmail());
                 enrolledCourses.setCourse_id(resultSet.getInt("course_id"));
                 enrolledCourses.setCourse_name(resultSet.getString("course_name"));
                 return enrolledCourses;

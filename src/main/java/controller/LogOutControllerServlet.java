@@ -25,7 +25,7 @@ public class LogOutControllerServlet extends HttpServlet {
         // if session is not null
         if (session.getAttribute(LogOutControllerServlet.AUTHORIZE_FIELD) != null) {
             // if logging out
-            if (req.getParameter("action") != null && req.getParameter("action").equals("logout")) {
+            if (req.getParameter("action") != null && req.getParameter("action").equals("/as02/out")) {
 
                 // LOGOUT --> dropping values to default and redirecting to login page
                 session.removeAttribute(LogOutControllerServlet.AUTHORIZE_FIELD);
@@ -55,7 +55,7 @@ public class LogOutControllerServlet extends HttpServlet {
         session.removeAttribute(LogOutControllerServlet.AUTHORIZE_FIELD);
         session.removeAttribute(LogOutControllerServlet.CURRENT_USER);
         System.out.println("User Logged Out...Forwarding to Log In Page...");
-        resp.sendRedirect("/as02/log");
+        resp.sendRedirect("/as02/reg");
     }
 
     @Override
