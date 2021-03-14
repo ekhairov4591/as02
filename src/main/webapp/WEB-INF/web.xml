@@ -27,6 +27,14 @@
         <servlet-class>controller.CabControllerServlet</servlet-class>
     </servlet>
 
+
+    <servlet>
+        <servlet-name>update</servlet-name>
+        <servlet-class>controller.UpdateControllerServlet</servlet-class>
+    </servlet>
+
+
+
     <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class>controller.LogOutControllerServlet</servlet-class>
@@ -47,6 +55,12 @@
     <servlet-mapping>
         <servlet-name>cabinet</servlet-name>
         <url-pattern>/cab</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/up</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

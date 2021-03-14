@@ -54,37 +54,64 @@ public class CabControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // get ID of a course to get enrolled to
         int toWebReg = Integer.parseInt(req.getParameter("availableCourses"));
 
+
+        // get email & password from the session
         HttpSession session = req.getSession();
         String email = (String) session.getAttribute("email");
         String password = (String) session.getAttribute("password");
         EnrolledCourses fetchedCourses;
 
-         User user = new User(email, password);
+        // pass email & password into User object
+        User user = new User(email, password);
 
         DBUtils dbUtils = new DBUtils();
 
+        // if users wants to enroll into new course...
+        // if toWebReg hsa a value other than 0 (0 is for default option represented in JSP)
+        if (toWebReg != 0) {
+            EnrolledCourses toEnroll = new EnrolledCourses(email, toWebReg);
+            try {
+                // add to enrolled (adds course to active_courses table)
+                dbUtils.enrollTo(toEnroll);
+                System.out.println("enrolled");
+                // now fetches this update from active_courses table
+                fetchedCourses = dbUtils.retrieveActiveCourses(user);
 
-        EnrolledCourses toEnroll = new EnrolledCourses(email, toWebReg);
-
-
-        try {
-            // add to enrolled
-            dbUtils.enrollTo(toEnroll);
-            System.out.println("enrolled");
-            // fetch updates
-            fetchedCourses = dbUtils.retrieveActiveCourses(user);
-
-            if(fetchedCourses != null){
-                System.out.println("fetched active courses");
-            } else {
-                System.out.println("Failed to fetch courses");
+                // if fetched something...
+                if (fetchedCourses != null) {
+                    System.out.println("fetched active courses");
+                } else { // if failed to fetch
+                    System.out.println("Failed to fetch courses");
+                }
+                // at the very end send redirect to /as02/log
+                resp.sendRedirect("/as02/log");
+                // if try fails
+            } catch (Exception e) {
+                System.out.println("failed to enroll");
+                e.printStackTrace();
             }
-            resp.sendRedirect("/as02/log");
-        } catch (Exception e){
-            System.out.println("failed to enroll");
-            e.printStackTrace();
+        } else { // if user leaves default value in select input
+
+            try {
+                // fetch old active_courses
+                fetchedCourses = dbUtils.retrieveActiveCourses(user);
+
+                // if fetched something...
+                if (fetchedCourses != null) {
+                    System.out.println("fetched active courses");
+                } else { // if failed to fetch
+                    System.out.println("Failed to fetch courses");
+                }
+                // at the very end send redirect to /as02/log
+                resp.sendRedirect("/as02/log");
+                // if try fails
+            } catch (Exception e) {
+                System.out.println("failed to enroll");
+                e.printStackTrace();
+            }
         }
 
 

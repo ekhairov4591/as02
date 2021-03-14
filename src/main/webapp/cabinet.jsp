@@ -53,6 +53,58 @@
     <hr>
     <hr>
 
+    <div class="tableTitle"><h2>Edit Personal Information</h2></div>
+
+    <form action="/as02/up" method="POST">
+        <!-- NAME -->
+        <label for="name"><b>Name</b></label>
+        <input
+                id="name" type="text" placeholder="Enter Name" name="update_name" required>
+        <!-- SURNAME -->
+        <label for="surname"><b>Surname</b></label>
+        <input
+                id="surname" type="text" placeholder="Enter Surname" name="update_surname" required>
+
+        <!-- AGE -->
+        <label for="age"><b>Age</b></label>
+        <input
+                type="number"
+                placeholder="Student Age"
+                name="update_age"
+                id="age" required><br>
+
+        <!-- COUNTRY -->
+        <label for="country"><b>Country</b></label>
+        <input
+                type="text"
+                placeholder="Student Country"
+                name="update_country"
+                id="country" required>
+
+        <!-- CITY -->
+        <label for="city"><b>City</b></label>
+
+        <input
+                type="text"
+                placeholder="Student City"
+                name="update_city"
+                id="city" required>
+
+        <!-- GENDER -->
+        <label for="gender"><b>Gender</b></label>
+        <select name="update_gender" id="gender" required>
+            <option selected="selected" selected disabled hidden>Select</option>
+
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <input
+                type="submit" class="registerbtn" value="Update">
+
+    </form>
+
+
 
     <div class="tableTitle">
         <h2>Available Courses</h2>
@@ -113,7 +165,7 @@
             <!-- Courses Available to Reg Form -->
             <label for="availableCourses"></label>
             <select name="availableCourses" id="availableCourses" required>
-                <option selected="selected" selected disabled hidden>Course ID</option>
+                <option value="0" selected disabled hidden>Course ID</option>
 
                 <option value="1">ID:1 Course:Music</option>
                 <option value="2">ID:2 Course:Arts</option>

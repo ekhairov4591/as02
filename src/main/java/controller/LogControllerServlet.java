@@ -89,14 +89,14 @@ public class LogControllerServlet extends HttpServlet {
                 session.setAttribute("course_name", fetchedCourses.getCourse_name());
                 System.out.println("fetched active courses in Log");
             } else {
-                System.out.println("Failed to fetch courses in Log");
+                System.out.println("Failed to fetch courses in Log...No Active Courses");
             }
 
 
-            System.out.println("User found & passed authentication. Session set...Forwarding to Cabinet...");
+            System.out.println("User found & passed authentication. Session set...Forwarding to Cabinet/as02/cab...");
            resp.sendRedirect("/as02/cab");
         } else {
-            System.out.println("User not found...Forwarding to Log In Page...");
+            System.out.println("User not found...Forwarding to Log In Page/as02/log...");
             resp.sendRedirect("/as02/log");
         }
     }

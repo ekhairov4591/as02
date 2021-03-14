@@ -57,6 +57,51 @@ public class DBUtils {
         return null;
     }
 
+    public String update(User user) {
+        loadDriver(dbDriver);
+        Connection connection = getConnection();
+        String removeSQL = "delete from users where email=? and password=?";
+        try{
+            System.out.println("Removing old record...");
+          PreparedStatement preparedStatement = connection.prepareStatement(removeSQL);
+          preparedStatement.setString(1, user.getEmail());
+          preparedStatement.setString(2, user.getPassword());
+            preparedStatement.executeUpdate();
+          preparedStatement.close();
+        }catch (SQLException e){
+            System.out.println("Failed to remove old record");
+            e.printStackTrace();
+        }
+
+        String sql = "insert into users values(?,?,?,?,?,?,?,?)";
+        try {
+            System.out.println("Inserting updated record...");
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setString(4, user.getCountry());
+            preparedStatement.setString(5, user.getCity());
+            preparedStatement.setString(6, user.getGender());
+            preparedStatement.setString(7, user.getName());
+            preparedStatement.setString(8, user.getSurname());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Failed to insert updated record");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
     public boolean validate(User user) {
         loadDriver(dbDriver);
         Connection connection = getConnection();
