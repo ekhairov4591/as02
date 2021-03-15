@@ -59,6 +59,8 @@ public class RegControllerServlet extends HttpServlet {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
 
+        System.out.println("Fetched New User Info in Reg Controller...");
+
         User user = new User(email, password, country, city, gender, name, surname, age);
         DBUtils dbUtils = new DBUtils();
         String result = dbUtils.insert(user);

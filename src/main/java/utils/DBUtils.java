@@ -68,7 +68,9 @@ public class DBUtils {
             preparedStatement.setString(8, user.getSurname());
             preparedStatement.executeUpdate();
             connection.close();
+            System.out.println("Insert successful from DBUtils.insert()...");
         } catch (SQLException e) {
+            System.out.println("Failed to insert from DBUtils.insert()...");
             e.printStackTrace();
         }
 
